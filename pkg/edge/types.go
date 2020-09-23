@@ -77,15 +77,23 @@ var EdgeEndpointTypeTypes = struct {
 type EdgeProviderRegion string
 
 var EdgeProviderRegionTypes = struct {
+	// Provider: `AWS`, Region: `eu-west-1`
+	AWS_EU_WEST_1 EdgeProviderRegion
 	// Provider: `AWS`, Region: `us-east-1`
 	AWS_US_EAST_1 EdgeProviderRegion
 	// Provider: `AWS`, Region: `us-east-2`
 	AWS_US_EAST_2 EdgeProviderRegion
+	// Provider: `AWS`, Region: `us-west-2`
+	AWS_US_WEST_2 EdgeProviderRegion
 }{
+	// Provider: `AWS`, Region: `eu-west-1`
+	AWS_EU_WEST_1: "AWS_EU_WEST_1",
 	// Provider: `AWS`, Region: `us-east-1`
 	AWS_US_EAST_1: "AWS_US_EAST_1",
 	// Provider: `AWS`, Region: `us-east-2`
 	AWS_US_EAST_2: "AWS_US_EAST_2",
+	// Provider: `AWS`, Region: `us-west-2`
+	AWS_US_WEST_2: "AWS_US_WEST_2",
 }
 
 // EdgeTraceObserverResponseErrorType - Known error codes and messages for `TraceObserverResponseError`.
@@ -136,6 +144,8 @@ func (x *EdgeAgentEndpointDetail) ImplementsEdgeEndpointDetail() {}
 
 // EdgeCreateTraceObserverInput - Data required to create a trace observer.
 type EdgeCreateTraceObserverInput struct {
+	// When set to `true` a trace observer will write trace metrics to the current account.
+	Monitoring bool `json:"monitoring"`
 	// Name of the trace observer.
 	Name string `json:"name"`
 	// Provider and region where the trace observer must run. Currently, only AWS regions are supported.
@@ -225,6 +235,8 @@ type EdgeTraceObserver struct {
 	Endpoints []EdgeEndpoint `json:"endpoints"`
 	// Globally unique identifier of this trace observer.
 	ID int `json:"id"`
+	// Which account monitoring metrics are being written to for this trace observer (if specified)
+	MonitoringAccountId int `json:"monitoringAccountId"`
 	// Human-readable name of this trace observer.
 	Name string `json:"name"`
 	// Provider-specific region of this endpoint (for example, `AWS_US_EAST_1`). Currently, only AWS regions are supported.
